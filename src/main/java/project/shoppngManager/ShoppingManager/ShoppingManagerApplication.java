@@ -1,5 +1,10 @@
 package project.shoppngManager.ShoppingManager;
 
+import io.swagger.v3.oas.annotations.ExternalDocumentation;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Contact;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.servers.Server;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import project.shoppngManager.ShoppingManager.generics.ShoppingManager;
@@ -10,6 +15,16 @@ import java.util.Scanner;
 
 
 @SpringBootApplication
+@OpenAPIDefinition(
+        info = @Info(
+                title = "Shopping Manager",
+                description = "This application handles basic services for an online store",
+                version = "v1"
+        ),
+        servers = {
+                @Server(url = "https://school-project-production.up.railway.app")
+        }
+)
 public class ShoppingManagerApplication {
 
     private static final ShoppingManager manager = new WestMinsterShoppingManager();

@@ -11,12 +11,12 @@ import project.shoppngManager.ShoppingManager.generics.ShoppingManager;
 import project.shoppngManager.ShoppingManager.models.CartBreakDown;
 import project.shoppngManager.ShoppingManager.models.Product;
 import project.shoppngManager.ShoppingManager.models.ProductType;
-
 import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1")
+@CrossOrigin(origins = "*")
 public class ClientController {
 
     private final ShoppingManager shoppingManager;
