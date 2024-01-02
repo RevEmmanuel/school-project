@@ -52,7 +52,8 @@ public class ShoppingManagerApplication {
                 1. Please enter 1 to add a product
                 2. Please enter 2 to delete a product
                 3. Please enter 3 to print products list
-                4. Please enter 4 to save to file""");
+                4. Please enter 4 to save to file
+                5. Exit application""");
         switch (result) {
             case "1":
                 addAProductMenu();
@@ -65,6 +66,9 @@ public class ShoppingManagerApplication {
                 break;
             case "4":
                 saveToFileMenu();
+                break;
+            case "5":
+                exitApplication(false);
                 break;
             default:
                 print("An error occurred, please enter the correct input!");
