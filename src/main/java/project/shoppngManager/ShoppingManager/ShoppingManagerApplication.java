@@ -114,24 +114,25 @@ public class ShoppingManagerApplication {
     }
 
     private static void addClothingMenu() {
-		String productId = input("Enter product ID:");
-		String productName = input("Enter product name:");
-		int availableItems = Integer.parseInt(input("Enter available items:"));
-		double price = Double.parseDouble(input("Enter price:"));
-		String size = input("Enter size:");
-		String color = input("Enter color:");
-		Clothing clothing = new Clothing(productId, productName, availableItems, price, size, color);
-		manager.addProduct(clothing);
-		startCliInterface();
+        String productId = validateStringInput("Enter product ID:");
+        String productName = validateStringInput("Enter product name:");
+        int availableItems = validateIntegerInput("Enter available items:");
+        double price = validateDoubleInput("Enter price:");
+        String size = validateStringInput("Enter size:");
+        String color = validateStringInput("Enter color:");
+        Clothing clothing = new Clothing(productId, productName, availableItems, price, size, color);
+        manager.addProduct(clothing);
+        startCliInterface();
     }
 
+
     private static void addElectronicsMenu() {
-		String productId = input("Enter product ID:");
-		String productName = input("Enter product name:");
-		int availableItems = Integer.parseInt(input("Enter available items:"));
-		double price = Double.parseDouble(input("Enter price:"));
-		String brand = input("Enter brand:");
-		int warrantyPeriod = Integer.parseInt(input("Enter warranty period (in numbers):"));
+        String productId = validateStringInput("Enter product ID:");
+        String productName = validateStringInput("Enter product name:");
+        int availableItems = validateIntegerInput("Enter available items:");
+        double price = validateDoubleInput("Enter cost:");
+		String brand = validateStringInput("Enter brand:");
+		int warrantyPeriod = validateIntegerInput("Enter warranty period (in numbers):");
 		Electronics electronics = new Electronics(productId, productName, availableItems, price, brand, warrantyPeriod);
 		manager.addProduct(electronics);
 		startCliInterface();
@@ -152,6 +153,37 @@ public class ShoppingManagerApplication {
 
     private static void print(String output) {
         System.out.println(output);
+    }
+
+    private static int validateIntegerInput(String prompt) {
+        while (true) {
+            try {
+                return Integer.parseInt(input(prompt));
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid integer.");
+            }
+        }
+    }
+
+    private static double validateDoubleInput(String prompt) {
+        while (true) {
+            try {
+                return Double.parseDouble(input(prompt));
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
+            }
+        }
+    }
+
+    private static String validateStringInput(String prompt) {
+        String input;
+        do {
+            input = input(prompt);
+            if (input.trim().isEmpty()) {
+                System.out.println("Input cannot be empty. Please try again.");
+            }
+        } while (input.trim().isEmpty());
+        return input;
     }
 
 }
