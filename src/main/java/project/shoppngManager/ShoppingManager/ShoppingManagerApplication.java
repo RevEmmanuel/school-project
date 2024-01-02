@@ -22,7 +22,8 @@ import java.util.Scanner;
                 version = "v1"
         ),
         servers = {
-                @Server(url = "https://school-project-production.up.railway.app")
+                @Server(url = "https://school-project-production.up.railway.app", description = "PROD"),
+                @Server(url = "https://school-project-production.up.railway.app", description = "LOCALHOST")
         }
 )
 public class ShoppingManagerApplication {
