@@ -2,7 +2,7 @@ package project.shoppngManager.ShoppingManager.models;
 
 import java.io.Serializable;
 
-public abstract class Product {
+public abstract class Product implements Serializable {
     private String productId;
     private String productName;
     private int availableItems;

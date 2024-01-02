@@ -9,6 +9,8 @@ import project.shoppngManager.ShoppingManager.generics.ShoppingManager;
 import project.shoppngManager.ShoppingManager.generics.WestMinsterShoppingManager;
 import project.shoppngManager.ShoppingManager.models.Clothing;
 import project.shoppngManager.ShoppingManager.models.Electronics;
+
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -128,7 +130,12 @@ public class ShoppingManagerApplication {
     }
 
     private static void addClothingMenu() {
+        List<String> existingIds = manager.loadExistingIds();
         String productId = validateStringInput("Enter product ID:");
+        if (existingIds.contains(productId)) {
+            print("ID exists already, start process again with different ID");
+            addClothingMenu();
+        }
         String productName = validateStringInput("Enter product name:");
         int availableItems = validateIntegerInput("Enter available items:");
         double price = validateDoubleInput("Enter price:");
@@ -141,7 +148,12 @@ public class ShoppingManagerApplication {
 
 
     private static void addElectronicsMenu() {
+        List<String> existingIds = manager.loadExistingIds();
         String productId = validateStringInput("Enter product ID:");
+        if (existingIds.contains(productId)) {
+            print("ID exists already, start process again with different ID");
+            addElectronicsMenu();
+        }
         String productName = validateStringInput("Enter product name:");
         int availableItems = validateIntegerInput("Enter available items:");
         double price = validateDoubleInput("Enter cost:");

@@ -113,4 +113,13 @@ public class WestMinsterShoppingManager implements ShoppingManager {
         return null;
     }
 
+    @Override
+    public List<String> loadExistingIds() {
+        List<String> existingIds = new ArrayList<>();
+        for (Product product: productList) {
+            existingIds.add(product.getProductId());
+        }
+        return existingIds;
+    }
+
 }

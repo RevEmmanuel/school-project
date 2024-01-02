@@ -22,4 +22,5 @@ public interface ShoppingManager {
 
     Product findProductById(String productId);
 
+    List<String> loadExistingIds();
 }
