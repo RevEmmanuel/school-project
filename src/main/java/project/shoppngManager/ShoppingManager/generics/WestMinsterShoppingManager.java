@@ -6,7 +6,6 @@ import project.shoppngManager.ShoppingManager.models.Clothing;
 import project.shoppngManager.ShoppingManager.models.Electronics;
 import project.shoppngManager.ShoppingManager.models.Product;
 import project.shoppngManager.ShoppingManager.models.ProductType;
-
 import java.io.*;
 import java.util.*;
 

@@ -11,6 +11,10 @@ import project.shoppngManager.ShoppingManager.models.Clothing;
 import project.shoppngManager.ShoppingManager.models.Electronics;
 import java.util.List;
 import java.util.Scanner;
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 
 @SpringBootApplication
@@ -38,6 +42,7 @@ public class ShoppingManagerApplication {
 				break;
 			case "2":
                 print("Application Running!");
+                openWebBrowser("https://online-shop-coursework.onrender.com/");
 				break;
 			default:
                 print("Please pick a correct input!");
@@ -216,6 +221,24 @@ public class ShoppingManagerApplication {
             }
         } while (input.trim().isEmpty());
         return input;
+    }
+
+    public static void openWebBrowser(String url) {
+        if(Desktop.isDesktopSupported()){
+            Desktop desktop = Desktop.getDesktop();
+            try {
+                desktop.browse(new URI(url));
+            } catch (IOException | URISyntaxException e) {
+                e.printStackTrace();
+            }
+        }else{
+            Runtime runtime = Runtime.getRuntime();
+            try {
+                runtime.exec("rundll32 url.dll,FileProtocolHandler " + url);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }
