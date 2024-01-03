@@ -9,7 +9,6 @@ import project.shoppngManager.ShoppingManager.generics.ShoppingManager;
 import project.shoppngManager.ShoppingManager.generics.WestMinsterShoppingManager;
 import project.shoppngManager.ShoppingManager.models.Clothing;
 import project.shoppngManager.ShoppingManager.models.Electronics;
-
 import java.util.List;
 import java.util.Scanner;
 
@@ -103,7 +102,7 @@ public class ShoppingManagerApplication {
 
     private static void deleteAProductMenu() {
         print("Welcome to delete a product menu!");
-        String result = input("Please enter the id of the product you want to delete or enter a random value to go back to main menu");
+        String result = validateStringInput("Please enter the id of the product you want to delete or enter a random value to go back to main menu");
         manager.removeProduct(result);
         startCliInterface();
     }
@@ -115,15 +114,14 @@ public class ShoppingManagerApplication {
                 1. Please enter 1 for Electronics
                 2. Please enter 2 for Clothing
                 3. Please enter 3 to go back to previous menu""");
-        int numResult = Integer.parseInt(result);
-        switch (numResult) {
-            case 1:
+        switch (result) {
+            case "1":
                 addElectronicsMenu();
                 break;
-            case 2:
+            case "2":
                 addClothingMenu();
                 break;
-            case 3:
+            case "3":
                 print("Going back...");
                 startCliInterface();
                 break;
@@ -145,7 +143,8 @@ public class ShoppingManagerApplication {
         double price = validateDoubleInput("Enter price:");
         String size = validateStringInput("Enter size:");
         String color = validateStringInput("Enter color:");
-        Clothing clothing = new Clothing(productId, productName, availableItems, price, size, color);
+        String info = validateStringInput("Enter info about product:");
+        Clothing clothing = new Clothing(productId, productName, availableItems, price, size, color, info);
         manager.addProduct(clothing);
         startCliInterface();
     }
@@ -159,17 +158,20 @@ public class ShoppingManagerApplication {
             addElectronicsMenu();
         }
         String productName = validateStringInput("Enter product name:");
-        int availableItems = validateIntegerInput("Enter available items:");
+        int availableItems = validateIntegerInput("Enter number of available items:");
         double price = validateDoubleInput("Enter cost:");
 		String brand = validateStringInput("Enter brand:");
-		int warrantyPeriod = validateIntegerInput("Enter warranty period (in numbers):");
-		Electronics electronics = new Electronics(productId, productName, availableItems, price, brand, warrantyPeriod);
+		String warrantyPeriod = validateStringInput("Enter warranty period (in numbers):");
+        String info = validateStringInput("Enter info about product:");
+		Electronics electronics = new Electronics(productId, productName, availableItems, price, brand, warrantyPeriod, info);
 		manager.addProduct(electronics);
 		startCliInterface();
     }
 
     private static void exitApplication(boolean error) {
         if (!error) {
+            print("Saving products...");
+            manager.saveProductsToFile();
             print("Thanks for using our application");
         }
         System.exit(0);

@@ -1,10 +1,12 @@
 package project.shoppngManager.ShoppingManager.generics;
 
 import org.springframework.stereotype.Service;
+import project.shoppngManager.ShoppingManager.exceptions.ProductNotFoundException;
 import project.shoppngManager.ShoppingManager.models.Clothing;
 import project.shoppngManager.ShoppingManager.models.Electronics;
 import project.shoppngManager.ShoppingManager.models.Product;
 import project.shoppngManager.ShoppingManager.models.ProductType;
+
 import java.io.*;
 import java.util.*;
 
@@ -110,16 +112,31 @@ public class WestMinsterShoppingManager implements ShoppingManager {
                 return product;
             }
         }
-        return null;
+        throw new ProductNotFoundException();
     }
 
     @Override
     public List<String> loadExistingIds() {
         List<String> existingIds = new ArrayList<>();
-        for (Product product: productList) {
+        for (Product product : productList) {
             existingIds.add(product.getProductId());
         }
         return existingIds;
+    }
+
+    private void loadFile() {
+        Clothing clothing1 = new Clothing("B001", "T-Shirt", 7, 19.99, "M", "Blue", "Comfortable cotton t-shirt for everyday wear");
+        Clothing clothing2 = new Clothing("B002", "Jeans", 3, 49.99, "32", "Black", "Classic denim jeans for a stylish look");
+        Clothing clothing3 = new Clothing("B003", "Jacket", 10, 89.99, "L", "Gray", "Warm and stylish jacket for the winter season");
+        Electronics electronics1 = new Electronics("A001", "Smartphone", 10, 499.99, "TechCo", "1 month", "High-performance smartphone with advanced features");
+        Electronics electronics2 = new Electronics("A002", "Laptop", 8, 1099.99, "ElectroTech", "3 months", "Powerful laptop for professional use");
+        Electronics electronics3 = new Electronics("A003", "Headphones", 12, 79.99, "AudioTech", "6 months", "Over-ear headphones with noise cancellation");
+        productList.add(clothing1);
+        productList.add(clothing2);
+        productList.add(clothing3);
+        productList.add(electronics1);
+        productList.add(electronics2);
+        productList.add(electronics3);
     }
 
 }

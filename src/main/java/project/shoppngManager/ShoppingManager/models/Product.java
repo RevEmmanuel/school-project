@@ -9,7 +9,17 @@ public abstract class Product implements Serializable {
     private double price;
     private final ProductType type;
 
-    public Product(String productId, String productName, int availableItems, double price, ProductType type) {
+    private String info;
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    public Product(String productId, String productName, int availableItems, double price, ProductType type, String info) {
         this.productId = productId;
         this.productName = productName;
         this.availableItems = availableItems;

@@ -3,11 +3,11 @@ package project.shoppngManager.ShoppingManager.models;
 public class Electronics extends Product {
 
     private String brand;
-    private int warrantyPeriod;
+    private String warrantyPeriod;
 
     public Electronics(String productId, String productName, int availableItems, double price,
-                       String brand, int warrantyPeriod) {
-        super(productId, productName, availableItems, price, ProductType.ELECTRONICS);
+                       String brand, String warrantyPeriod, String info) {
+        super(productId, productName, availableItems, price, ProductType.ELECTRONICS, info);
         this.brand = brand;
         this.warrantyPeriod = warrantyPeriod;
     }
@@ -20,11 +20,11 @@ public class Electronics extends Product {
         this.brand = brand;
     }
 
-    public int getWarrantyPeriod() {
+    public String getWarrantyPeriod() {
         return warrantyPeriod;
     }
 
-    public void setWarrantyPeriod(int warrantyPeriod) {
+    public void setWarrantyPeriod(String warrantyPeriod) {
         this.warrantyPeriod = warrantyPeriod;
     }
 }
