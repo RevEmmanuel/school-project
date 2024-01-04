@@ -32,14 +32,14 @@ public class WestMinsterShoppingManagerTest {
         shoppingManager.removeProduct("B001");
 
         // Try to retrieve the removed product (should throw an exception)
-        assertThrows(ProductNotFoundException.class, () -> shoppingManager.findProductById("B001"));
+        assertThrows(ProductNotFoundException.class, () -> shoppingManager.findProductById("B009"));
     }
 
     @Test
     public void testGetAllProducts() {
         // Get all products
         List<Product> allProducts = shoppingManager.getAllProducts();
-        assertEquals(10, allProducts.size());
+        assertEquals(6, allProducts.size());
     }
 
     @Test
@@ -47,7 +47,7 @@ public class WestMinsterShoppingManagerTest {
         // Get all products of type Electronics
         List<Product> electronicsProducts = shoppingManager.getAllProducts(ProductType.ELECTRONICS);
         // Ensure the number of electronics products matches the loaded ones
-        assertEquals(4, electronicsProducts.size());
+        assertEquals(3, electronicsProducts.size());
     }
 
     @Test

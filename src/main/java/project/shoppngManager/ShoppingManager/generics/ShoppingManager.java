@@ -8,8 +8,6 @@ import java.util.List;
 public interface ShoppingManager {
     void addProduct(Product product);
 
-    void removeProduct(Product product);
-
     void removeProduct(String productId);
 
     void printProductList();

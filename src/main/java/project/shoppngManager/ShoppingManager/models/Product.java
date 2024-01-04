@@ -25,6 +25,7 @@ public abstract class Product implements Serializable {
         this.availableItems = availableItems;
         this.price = price;
         this.type = type;
+        this.info = info;
     }
 
     public ProductType getType() {

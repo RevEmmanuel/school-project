@@ -26,11 +26,6 @@ public class WestMinsterShoppingManager implements ShoppingManager {
     }
 
     @Override
-    public void removeProduct(Product product) {
-        removeProduct(product.getProductId());
-    }
-
-    @Override
     public void removeProduct(String productId) {
         Iterator<Product> iterator = productList.iterator();
         while (iterator.hasNext()) {
@@ -52,6 +47,7 @@ public class WestMinsterShoppingManager implements ShoppingManager {
             System.out.println(product instanceof Electronics ? "Electronics:" : "Clothing:");
             System.out.println("Product ID: " + product.getProductId());
             System.out.println("Product Name: " + product.getProductName());
+            System.out.println("Product Info: " + product.getInfo());
             if (product instanceof Electronics) {
                 System.out.println("Brand: " + ((Electronics) product).getBrand());
                 System.out.println("Warranty Period: " + ((Electronics) product).getWarrantyPeriod());
@@ -123,7 +119,7 @@ public class WestMinsterShoppingManager implements ShoppingManager {
         return existingIds;
     }
 
-    private void loadFile() {
+    public void loadFile() {
         Clothing clothing1 = new Clothing("B001", "T-Shirt", 7, 19.99, "M", "Blue", "Comfortable cotton t-shirt for everyday wear");
         Clothing clothing2 = new Clothing("B002", "Jeans", 3, 49.99, "32", "Black", "Classic denim jeans for a stylish look");
         Clothing clothing3 = new Clothing("B003", "Jacket", 10, 89.99, "L", "Gray", "Warm and stylish jacket for the winter season");
