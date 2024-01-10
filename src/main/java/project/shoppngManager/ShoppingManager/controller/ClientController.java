@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.shoppngManager.ShoppingManager.generics.CartItem;
+import project.shoppngManager.ShoppingManager.generics.SearchCriteria;
 import project.shoppngManager.ShoppingManager.generics.ShoppingCart;
 import project.shoppngManager.ShoppingManager.generics.ShoppingManager;
 import project.shoppngManager.ShoppingManager.models.CartBreakDown;
@@ -52,19 +53,19 @@ public class ClientController {
 
     @Operation(summary = "Get a particular product by the product's id",
             description = "Returns a Response entity containing the requested product and HTTP status code. If the product is not found, an exception is thrown.")
-    @GetMapping("/allProducts/{productId}")
+    @GetMapping("/allProducts/{searchCriteria}")
     public ResponseEntity<Product> getProductById(@PathVariable @NotNull @Parameter(name = "id", description = "The id of the required stock",
-            required = true, example = "1L")  String productId) {
-        return ResponseEntity.ok(shoppingManager.findProductById(productId));
+            required = true, example = "B007")  SearchCriteria searchCriteria) {
+        return ResponseEntity.ok(shoppingManager.findProductById(searchCriteria.getProductId()));
     }
 
 
     @Operation(summary = "Add a particular product to cart by the product's id",
             description = "Returns a Response entity containing the cart")
-    @PostMapping("/add/allProducts/{productId}")
+    @PostMapping("/add/allProducts/{searchCriteria}")
     public ResponseEntity<List<CartItem>> addProductToCart(@PathVariable @NotNull @Parameter(name = "id", description = "The id of the required product to be added to cart",
-            required = true, example = "1L")  String productId) {
-        return ResponseEntity.ok(shoppingCart.addProduct(shoppingManager.findProductById(productId)));
+            required = true, example = "A007") SearchCriteria searchCriteria) {
+        return ResponseEntity.ok(shoppingCart.addProduct(shoppingManager.findProductById(searchCriteria.getProductId())));
     }
 
     @Operation(summary = "Get total cart for customer",
