@@ -54,8 +54,8 @@ public class ClientController {
 
     @Operation(summary = "Get a particular product by the product's id",
             description = "Returns a Response entity containing the requested product and HTTP status code. If the product is not found, an exception is thrown.")
-    @GetMapping("/allProducts")
-    public ResponseEntity<Product> getProductById(@RequestBody @Valid @NotNull SearchCriteria searchCriteria) {
+    @GetMapping("/allProducts/id")
+    public ResponseEntity<Product> getProductById(@RequestBody @Valid SearchCriteria searchCriteria) {
         return ResponseEntity.ok(shoppingManager.findProductById(searchCriteria.getProductId()));
     }
 
@@ -63,7 +63,7 @@ public class ClientController {
     @Operation(summary = "Add a particular product to cart by the product's id",
             description = "Returns a Response entity containing the cart")
     @PostMapping("/add/allProducts")
-    public ResponseEntity<List<CartItem>> addProductToCart(@RequestBody @Valid @NotNull SearchCriteria searchCriteria) {
+    public ResponseEntity<List<CartItem>> addProductToCart(@RequestBody @Valid SearchCriteria searchCriteria) {
         return ResponseEntity.ok(shoppingCart.addProduct(shoppingManager.findProductById(searchCriteria.getProductId())));
     }
 
