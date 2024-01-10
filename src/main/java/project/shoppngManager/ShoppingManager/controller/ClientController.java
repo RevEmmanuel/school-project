@@ -2,6 +2,7 @@ package project.shoppngManager.ShoppingManager.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -53,18 +54,16 @@ public class ClientController {
 
     @Operation(summary = "Get a particular product by the product's id",
             description = "Returns a Response entity containing the requested product and HTTP status code. If the product is not found, an exception is thrown.")
-    @GetMapping("/allProducts/{searchCriteria}")
-    public ResponseEntity<Product> getProductById(@PathVariable @NotNull @Parameter(name = "id", description = "The id of the required stock",
-            required = true, example = "B007")  SearchCriteria searchCriteria) {
+    @GetMapping("/allProducts")
+    public ResponseEntity<Product> getProductById(@RequestBody @Valid @NotNull SearchCriteria searchCriteria) {
         return ResponseEntity.ok(shoppingManager.findProductById(searchCriteria.getProductId()));
     }
 
 
     @Operation(summary = "Add a particular product to cart by the product's id",
             description = "Returns a Response entity containing the cart")
-    @PostMapping("/add/allProducts/{searchCriteria}")
-    public ResponseEntity<List<CartItem>> addProductToCart(@PathVariable @NotNull @Parameter(name = "id", description = "The id of the required product to be added to cart",
-            required = true, example = "A007") SearchCriteria searchCriteria) {
+    @PostMapping("/add/allProducts")
+    public ResponseEntity<List<CartItem>> addProductToCart(@RequestBody @Valid @NotNull SearchCriteria searchCriteria) {
         return ResponseEntity.ok(shoppingCart.addProduct(shoppingManager.findProductById(searchCriteria.getProductId())));
     }
 
