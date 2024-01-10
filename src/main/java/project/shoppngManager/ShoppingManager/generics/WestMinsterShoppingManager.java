@@ -103,6 +103,7 @@ public class WestMinsterShoppingManager implements ShoppingManager {
 
     public Product findProductById(String productId) {
         for (Product product : productList) {
+            System.out.println(product.getProductId());
             if (product.getProductId().equals(productId)) {
                 return product;
             }
@@ -123,12 +124,14 @@ public class WestMinsterShoppingManager implements ShoppingManager {
         Clothing clothing1 = new Clothing("B001", "T-Shirt", 7, 19.99, "M", "Blue", "Comfortable cotton t-shirt for everyday wear");
         Clothing clothing2 = new Clothing("B002", "Jeans", 3, 49.99, "32", "Black", "Classic denim jeans for a stylish look");
         Clothing clothing3 = new Clothing("B003", "Jacket", 10, 89.99, "L", "Gray", "Warm and stylish jacket for the winter season");
+        Clothing clothing4 = new Clothing("B004", "TurtleNeck", 1, 65.99, "L", "White", "Round collar that fits perfectly");
         Electronics electronics1 = new Electronics("A001", "Smartphone", 10, 499.99, "TechCo", "1 month", "High-performance smartphone with advanced features");
         Electronics electronics2 = new Electronics("A002", "Laptop", 8, 1099.99, "ElectroTech", "3 months", "Powerful laptop for professional use");
         Electronics electronics3 = new Electronics("A003", "Headphones", 12, 79.99, "AudioTech", "6 months", "Over-ear headphones with noise cancellation");
         productList.add(clothing1);
         productList.add(clothing2);
         productList.add(clothing3);
+        productList.add(clothing4);
         productList.add(electronics1);
         productList.add(electronics2);
         productList.add(electronics3);

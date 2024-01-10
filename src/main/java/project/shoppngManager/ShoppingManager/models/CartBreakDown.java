@@ -1,10 +1,11 @@
 package project.shoppngManager.ShoppingManager.models;
 
-import java.util.Map;
+import project.shoppngManager.ShoppingManager.generics.CartItem;
+import java.util.List;
 
 public class CartBreakDown {
 
-    private Map<Product, Integer> cart;
+    private List<CartItem> cart;
     private boolean discountApplied;
 
     private double totalPrice;
@@ -37,11 +38,11 @@ public class CartBreakDown {
         this.amountToBePaid = amountToBePaid;
     }
 
-    public Map<Product, Integer> getCart() {
+    public List<CartItem> getCart() {
         return cart;
     }
 
-    public void setCart(Map<Product, Integer> cart) {
+    public void setCart(List<CartItem> cart) {
         this.cart = cart;
     }
 

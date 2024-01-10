@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import project.shoppngManager.ShoppingManager.generics.CartItem;
 import project.shoppngManager.ShoppingManager.generics.ShoppingCart;
 import project.shoppngManager.ShoppingManager.generics.ShoppingManager;
 import project.shoppngManager.ShoppingManager.models.CartBreakDown;
@@ -61,7 +62,7 @@ public class ClientController {
     @Operation(summary = "Add a particular product to cart by the product's id",
             description = "Returns a Response entity containing the cart")
     @PostMapping("/add/allProducts/{productId}")
-    public ResponseEntity<Map<Product, Integer>> addProductToCart(@PathVariable @NotNull @Parameter(name = "id", description = "The id of the required product to be added to cart",
+    public ResponseEntity<List<CartItem>> addProductToCart(@PathVariable @NotNull @Parameter(name = "id", description = "The id of the required product to be added to cart",
             required = true, example = "1L")  String productId) {
         return ResponseEntity.ok(shoppingCart.addProduct(shoppingManager.findProductById(productId)));
     }
@@ -71,6 +72,13 @@ public class ClientController {
     @GetMapping("/shoppingCart")
     public ResponseEntity<CartBreakDown> getCart() {
         return ResponseEntity.ok(shoppingCart.getCartBreakdown());
+    }
+
+    @Operation(summary = "Clear entire cart",
+            description = "Returns a string response")
+    @DeleteMapping("/shoppingCart")
+    public ResponseEntity<String> clearCart() {
+        return ResponseEntity.ok(shoppingCart.clearCart());
     }
 
 }

@@ -1,75 +1,80 @@
 package project.shoppngManager.ShoppingManager.generics;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 import project.shoppngManager.ShoppingManager.exceptions.OutOfStockException;
 import project.shoppngManager.ShoppingManager.models.CartBreakDown;
 import project.shoppngManager.ShoppingManager.models.Product;
-
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class ShoppingCart {
 
-    private static final List<Product> products = new ArrayList<>();
-    private static final Map<String, Integer> cart = new HashMap<>();
-    private final ShoppingManager shoppingManager;
+    private static final List<CartItem> cart = new ArrayList<>();
 
-    @Autowired
-    public ShoppingCart(ShoppingManager shoppingManager) {
-        this.shoppingManager = shoppingManager;
-    }
-
-    public Map<Product, Integer> addProduct(Product product) {
+    public List<CartItem> addProduct(Product product) {
         if (product.getAvailableItems() == 0) {
             throw new OutOfStockException("Product is out of stock");
         }
-        Integer quantity = 0;
-        if (cart.containsKey(product.getProductId())) {
-            quantity = cart.get(product.getProductId());
-            cart.remove(product.getProductId());
+        if (checkIfProductIsAlreadyInCart(product)) {
+            for (CartItem cartItem: cart) {
+                if (cartItem.getProduct().getProductId().equals(product.getProductId())) {
+                    cartItem.increaseQuantity();
+                }
+            }
+        } else {
+            cart.add(new CartItem(product, 1));
         }
-        cart.put(product.getProductId(), quantity + 1);
-        products.add(product);
-        return convertCartToProductList();
+        return cart;
     }
 
     public double calculateTotalCost() {
         double totalCost = 0;
-        for (Product product : products) {
-            totalCost += product.getPrice();
+        for (CartItem cartItem : cart) {
+            double amount = cartItem.getProduct().getPrice() * cartItem.getQuantity();
+            totalCost += amount;
         }
         return totalCost;
     }
 
     public CartBreakDown getCartBreakdown() {
         CartBreakDown checkCart = new CartBreakDown();
-        checkCart.setCart(convertCartToProductList());
+        checkCart.setCart(cart);
         checkCart.setDiscountApplied(checkIfDiscountApplies());
-        checkCart.setTotalPrice(calculateTotalCost());
-        checkCart.setDiscount(20.00 * checkCart.getTotalPrice() / 100.00);
-        checkCart.setAmountToBePaid(checkCart.getTotalPrice() - checkCart.getDiscount());
+        BigDecimal totalPrice = BigDecimal.valueOf(calculateTotalCost()).setScale(2, RoundingMode.HALF_UP);
+        checkCart.setTotalPrice(totalPrice.doubleValue());
+
+        BigDecimal discount = totalPrice.multiply(BigDecimal.valueOf(0.2)).setScale(2, RoundingMode.HALF_UP);
+        checkCart.setDiscount(discount.doubleValue());
+        BigDecimal amountToBePaid = totalPrice.subtract(discount);
+        checkCart.setAmountToBePaid(amountToBePaid.doubleValue());
         return checkCart;
     }
 
-    private Map<Product, Integer> convertCartToProductList() {
-        Map<Product, Integer> newCart = new HashMap<>();
-        for (String productId : cart.keySet()) {
-            Product foundProduct = shoppingManager.findProductById(productId);
-            if (foundProduct != null) {
-                newCart.put(foundProduct, cart.get(productId));
-            }
-        }
-        return newCart;
+    public String clearCart() {
+        cart.clear();
+        return "SUCCESSFUL!";
     }
 
     private boolean checkIfDiscountApplies() {
-        for (String productId : cart.keySet()) {
-            if (cart.get(productId) > 1) return true;
+        for (CartItem cartItem: cart) {
+            if (cartItem.getQuantity() > 1) {
+                return true;
+            }
         }
         return false;
     }
+
+    private boolean checkIfProductIsAlreadyInCart(Product product) {
+        for (CartItem cartItem: cart) {
+            if (cartItem.getProduct().getProductId().equals(product.getProductId())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
