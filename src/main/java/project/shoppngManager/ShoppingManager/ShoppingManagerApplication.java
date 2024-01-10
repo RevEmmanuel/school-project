@@ -26,7 +26,7 @@ import java.net.URISyntaxException;
         ),
         servers = {
                 @Server(url = "https://school-project-production.up.railway.app", description = "PROD"),
-                @Server(url = "https://school-project-production.up.railway.app", description = "LOCALHOST")
+                @Server(url = "http://localhost:8080", description = "LOCALHOST")
         }
 )
 public class ShoppingManagerApplication {
